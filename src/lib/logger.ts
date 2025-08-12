@@ -87,7 +87,6 @@ function logWithConsole(
   method: "debug" | "info" | "warn" | "error",
   payload: Record<string, unknown>,
 ): void {
-   
   console[method](payload);
 }
 
