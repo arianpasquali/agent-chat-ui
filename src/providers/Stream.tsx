@@ -1,4 +1,5 @@
 import React, {
+import { createLogger } from "@/lib/logger";
   createContext,
   useContext,
   ReactNode,
@@ -42,6 +43,8 @@ const useTypedStream = useStream<
 type StreamContextType = ReturnType<typeof useTypedStream>;
 const StreamContext = createContext<StreamContextType | undefined>(undefined);
 
+const log = createLogger("Stream");
+
 async function sleep(ms = 4000) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -61,7 +64,7 @@ async function checkGraphStatus(
 
     return res.ok;
   } catch (e) {
-    console.error(e);
+    log.error("Failed to fetch graph info", { apiUrl }, e);
     return false;
   }
 }
@@ -93,16 +96,18 @@ const StreamSession = ({
       }
     },
     onThreadId: (id) => {
+      log.info("Thread ID set", { threadId: id });
       setThreadId(id);
       // Refetch threads list when thread ID changes.
       // Wait for some seconds before fetching so we're able to get the new thread that was created.
-      sleep().then(() => getThreads().then(setThreads).catch(console.error));
+      sleep().then(() => getThreads().then(setThreads).catch((err) => log.error("Failed to refresh threads after new threadId", { err })));
     },
   });
 
   useEffect(() => {
     checkGraphStatus(apiUrl, apiKey).then((ok) => {
       if (!ok) {
+        log.warn("LangGraph server unreachable", { apiUrl });
         toast.error("Failed to connect to LangGraph server", {
           description: () => (
             <p>
@@ -283,5 +288,4 @@ export const useStreamContext = (): StreamContextType => {
 };
 
 export default StreamContext;
-
 

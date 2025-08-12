@@ -3,12 +3,14 @@ import { ThreadActionsView } from "./components/thread-actions-view";
 import { useState } from "react";
 import { HumanInterrupt } from "@langchain/langgraph/prebuilt";
 import { useStreamContext } from "@/providers/Stream";
+import { createLogger } from "@/lib/logger";
 
 interface ThreadViewProps {
   interrupt: HumanInterrupt | HumanInterrupt[];
 }
 
 export function ThreadView({ interrupt }: ThreadViewProps) {
+  const log = createLogger("AgentInbox/ThreadView");
   const interruptObj = Array.isArray(interrupt) ? interrupt[0] : interrupt;
   const thread = useStreamContext();
   const [showDescription, setShowDescription] = useState(false);
@@ -20,7 +22,7 @@ export function ThreadView({ interrupt }: ThreadViewProps) {
     showDescription: boolean,
   ) => {
     if (showState && showDescription) {
-      console.error("Cannot show both state and description");
+      log.warn("Invalid side panel state: both toggles true");
       return;
     }
     if (showState) {

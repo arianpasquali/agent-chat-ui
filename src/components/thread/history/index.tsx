@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useThreads } from "@/providers/Thread";
 import { Thread } from "@langchain/langgraph-sdk";
 import { useEffect } from "react";
+import { createLogger } from "@/lib/logger";
 
 import { getContentString } from "../utils";
 import { useQueryState, parseAsBoolean } from "nuqs";
@@ -76,6 +77,7 @@ function ThreadHistoryLoading() {
 }
 
 export default function ThreadHistory() {
+  const log = createLogger("ThreadHistory");
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   const [chatHistoryOpen, setChatHistoryOpen] = useQueryState(
     "chatHistoryOpen",
@@ -90,7 +92,7 @@ export default function ThreadHistory() {
     setThreadsLoading(true);
     getThreads()
       .then(setThreads)
-      .catch(console.error)
+      .catch((err) => log.error("Failed to load threads", { err }))
       .finally(() => setThreadsLoading(false));
   }, []);
 
@@ -144,4 +146,3 @@ export default function ThreadHistory() {
     </>
   );
 }
-

@@ -8,6 +8,9 @@ import { MarkdownText } from "../../markdown-text";
 import { ActionRequest, HumanInterrupt } from "@langchain/langgraph/prebuilt";
 import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
+import { createLogger } from "@/lib/logger";
+const log = createLogger("AgentInbox/InboxItemInput");
+import { createLogger } from "@/lib/logger";
 
 function ResetButton({ handleReset }: { handleReset: () => void }) {
   return (
@@ -390,10 +393,7 @@ export function InboxItemInput({
 
     setHumanResponse((prev) => {
       if (typeof response.args !== "object" || !response.args) {
-        console.error(
-          "Mismatched response type",
-          !!response.args,
-          typeof response.args,
+        log.error("Mismatched response type", { hasArgs: !!response.args, type: typeof response.args },
         );
         return prev;
       }
