@@ -107,7 +107,7 @@ export default function useInterruptedActions({
 
     log.info("Submitting human response", { submitType: selectedSubmitType });
 
-    log.info("Submitting human response", { submitType: selectedSubmitType });
+
     if (!humanResponse) {
       toast.error("Error", {
         description: "Please enter a response.",
@@ -231,9 +231,7 @@ export default function useInterruptedActions({
   ) => {
     e.preventDefault();
 
-    log.info("Submitting human response", { submitType: selectedSubmitType });
 
-    log.info("Submitting human response", { submitType: selectedSubmitType });
 
     const ignoreResponse = humanResponse.find((r) => r.type === "ignore");
     if (!ignoreResponse) {
@@ -260,9 +258,7 @@ export default function useInterruptedActions({
   ) => {
     e.preventDefault();
 
-    log.info("Submitting human response", { submitType: selectedSubmitType });
 
-    log.info("Submitting human response", { submitType: selectedSubmitType });
 
     setLoading(true);
     initialHumanInterruptEditValue.current = {};
@@ -277,7 +273,6 @@ export default function useInterruptedActions({
         },
       );
 
-      log.info("Marked thread as resolved");
       log.info("Marked thread as resolved");
       toast("Success", {
         description: "Marked thread as resolved.",
