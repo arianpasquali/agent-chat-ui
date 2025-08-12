@@ -392,8 +392,10 @@ export function InboxItemInput({
 
     setHumanResponse((prev) => {
       if (typeof response.args !== "object" || !response.args) {
-        log.error("Mismatched response type", { hasArgs: !!response.args, type: typeof response.args },
-        );
+        log.error("Mismatched response type", {
+          hasArgs: !!response.args,
+          type: typeof response.args,
+        });
         return prev;
       }
 

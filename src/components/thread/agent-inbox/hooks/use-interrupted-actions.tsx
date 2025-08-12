@@ -52,7 +52,6 @@ interface UseInterruptedActionsValue {
   initialHumanInterruptEditValue: MutableRefObject<Record<string, string>>;
 }
 
-
 export default function useInterruptedActions({
   interrupt,
 }: UseInterruptedActionsInput): UseInterruptedActionsValue {
@@ -106,7 +105,6 @@ export default function useInterruptedActions({
     e.preventDefault();
 
     log.info("Submitting human response", { submitType: selectedSubmitType });
-
 
     if (!humanResponse) {
       toast.error("Error", {
@@ -231,8 +229,6 @@ export default function useInterruptedActions({
   ) => {
     e.preventDefault();
 
-
-
     const ignoreResponse = humanResponse.find((r) => r.type === "ignore");
     if (!ignoreResponse) {
       toast.error("Error", {
@@ -257,8 +253,6 @@ export default function useInterruptedActions({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
-
-
 
     setLoading(true);
     initialHumanInterruptEditValue.current = {};

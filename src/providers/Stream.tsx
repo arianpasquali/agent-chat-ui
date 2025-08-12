@@ -1,4 +1,10 @@
-import React, { createContext, useContext, ReactNode, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from "react";
 import { createLogger } from "@/lib/logger";
 import { useStream } from "@langchain/langgraph-sdk/react";
 import { type Message } from "@langchain/langgraph-sdk";
@@ -94,7 +100,13 @@ const StreamSession = ({
       setThreadId(id);
       // Refetch threads list when thread ID changes.
       // Wait for some seconds before fetching so we're able to get the new thread that was created.
-      sleep().then(() => getThreads().then(setThreads).catch((err) => log.error("Failed to refresh threads after new threadId", { err })));
+      sleep().then(() =>
+        getThreads()
+          .then(setThreads)
+          .catch((err) =>
+            log.error("Failed to refresh threads after new threadId", { err }),
+          ),
+      );
     },
   });
 

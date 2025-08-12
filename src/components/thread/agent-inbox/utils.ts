@@ -117,11 +117,10 @@ export function createDefaultHumanResponse(
           initialHumanInterruptEditValue.current[k] !== stringValue
         ) {
           log.error("Action request arg mismatch with initial edit value", {
-              key: k,
-              value: stringValue,
-              expectedValue: initialHumanInterruptEditValue.current[k],
-            },
-          );
+            key: k,
+            value: stringValue,
+            expectedValue: initialHumanInterruptEditValue.current[k],
+          });
         }
       });
       responses.push({
@@ -221,4 +220,3 @@ export function haveArgsChanged(
     return initialValues[key] !== valueString;
   });
 }
-

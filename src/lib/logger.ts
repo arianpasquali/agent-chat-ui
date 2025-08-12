@@ -16,7 +16,10 @@ const LEVEL_INDEX: Record<LogLevel, number> = {
 
 function isLogLevel(value: unknown): value is LogLevel {
   return (
-    value === "debug" || value === "info" || value === "warn" || value === "error"
+    value === "debug" ||
+    value === "info" ||
+    value === "warn" ||
+    value === "error"
   );
 }
 
@@ -91,7 +94,8 @@ function logWithConsole(
 export function createLogger(namespace: string): Logger {
   const base = { ns: namespace } as const;
 
-  const make = (level: LogLevel) =>
+  const make =
+    (level: LogLevel) =>
     (msg: string, meta?: Record<string, unknown>, err?: unknown) => {
       if (!shouldLog(level)) return;
       const errorObj = normalizeError(err);
@@ -121,4 +125,3 @@ const log = createLogger("Stream");
 log.info("Thread ID set", { threadId: "abc123" });
 log.error("Failed to fetch graph info", { apiUrl }, new Error("boom"));
 */
-
