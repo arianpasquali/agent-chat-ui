@@ -87,7 +87,7 @@ function logWithConsole(
   method: "debug" | "info" | "warn" | "error",
   payload: Record<string, unknown>,
 ): void {
-  // eslint-disable-next-line no-console
+   
   console[method](payload);
 }
 
@@ -125,4 +125,3 @@ const log = createLogger("Stream");
 log.info("Thread ID set", { threadId: "abc123" });
 log.error("Failed to fetch graph info", { apiUrl }, new Error("boom"));
 */
-
