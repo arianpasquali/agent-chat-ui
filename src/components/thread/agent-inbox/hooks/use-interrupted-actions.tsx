@@ -1,6 +1,5 @@
 import { HumanResponseWithEdits, SubmitType } from "../types";
 import {
-import { createLogger } from "@/lib/logger";
   KeyboardEvent,
   Dispatch,
   SetStateAction,
@@ -15,6 +14,7 @@ import { HumanInterrupt, HumanResponse } from "@langchain/langgraph/prebuilt";
 import { END } from "@langchain/langgraph/web";
 import { useStreamContext } from "@/providers/Stream";
 import { createLogger } from "@/lib/logger";
+const log = createLogger("AgentInbox/Hooks");
 
 interface UseInterruptedActionsInput {
   interrupt: HumanInterrupt;
@@ -52,7 +52,6 @@ interface UseInterruptedActionsValue {
   initialHumanInterruptEditValue: MutableRefObject<Record<string, string>>;
 }
 
-const log = createLogger("AgentInbox/Hooks");
 
 export default function useInterruptedActions({
   interrupt,
@@ -105,6 +104,8 @@ export default function useInterruptedActions({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | KeyboardEvent,
   ) => {
     e.preventDefault();
+
+    log.info("Submitting human response", { submitType: selectedSubmitType });
 
     log.info("Submitting human response", { submitType: selectedSubmitType });
     if (!humanResponse) {
@@ -232,6 +233,8 @@ export default function useInterruptedActions({
 
     log.info("Submitting human response", { submitType: selectedSubmitType });
 
+    log.info("Submitting human response", { submitType: selectedSubmitType });
+
     const ignoreResponse = humanResponse.find((r) => r.type === "ignore");
     if (!ignoreResponse) {
       toast.error("Error", {
@@ -259,6 +262,8 @@ export default function useInterruptedActions({
 
     log.info("Submitting human response", { submitType: selectedSubmitType });
 
+    log.info("Submitting human response", { submitType: selectedSubmitType });
+
     setLoading(true);
     initialHumanInterruptEditValue.current = {};
 
@@ -272,6 +277,7 @@ export default function useInterruptedActions({
         },
       );
 
+      log.info("Marked thread as resolved");
       log.info("Marked thread as resolved");
       toast("Success", {
         description: "Marked thread as resolved.",

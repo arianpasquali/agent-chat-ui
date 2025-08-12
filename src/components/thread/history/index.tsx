@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { useThreads } from "@/providers/Thread";
 import { Thread } from "@langchain/langgraph-sdk";
 import { useEffect } from "react";
-import { createLogger } from "@/lib/logger";
 
 import { getContentString } from "../utils";
 import { useQueryState, parseAsBoolean } from "nuqs";
@@ -15,6 +14,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { PanelRightOpen, PanelRightClose } from "lucide-react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { createLogger } from "@/lib/logger";
 
 function ThreadList({
   threads,

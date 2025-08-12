@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
 import { createLogger } from "@/lib/logger";
 const log = createLogger("AgentInbox/InboxItemInput");
-import { createLogger } from "@/lib/logger";
 
 function ResetButton({ handleReset }: { handleReset: () => void }) {
   return (
