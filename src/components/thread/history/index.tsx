@@ -14,6 +14,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { PanelRightOpen, PanelRightClose } from "lucide-react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { createLogger } from "@/lib/logger";
 
 function ThreadList({
   threads,
@@ -76,6 +77,7 @@ function ThreadHistoryLoading() {
 }
 
 export default function ThreadHistory() {
+  const log = createLogger("ThreadHistory");
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   const [chatHistoryOpen, setChatHistoryOpen] = useQueryState(
     "chatHistoryOpen",
@@ -90,7 +92,7 @@ export default function ThreadHistory() {
     setThreadsLoading(true);
     getThreads()
       .then(setThreads)
-      .catch(console.error)
+      .catch((err) => log.error("Failed to load threads", { err }))
       .finally(() => setThreadsLoading(false));
   }, []);
 

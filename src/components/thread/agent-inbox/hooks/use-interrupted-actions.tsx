@@ -13,6 +13,8 @@ import { toast } from "sonner";
 import { HumanInterrupt, HumanResponse } from "@langchain/langgraph/prebuilt";
 import { END } from "@langchain/langgraph/web";
 import { useStreamContext } from "@/providers/Stream";
+import { createLogger } from "@/lib/logger";
+const log = createLogger("AgentInbox/Hooks");
 
 interface UseInterruptedActionsInput {
   interrupt: HumanInterrupt;
@@ -76,7 +78,7 @@ export default function useInterruptedActions({
       setHumanResponse(responses);
       setAcceptAllowed(hasAccept);
     } catch (e) {
-      console.error("Error formatting and setting human response state", e);
+      log.error("Failed to set human response state", {}, e);
     }
   }, [interrupt]);
 
@@ -92,7 +94,7 @@ export default function useInterruptedActions({
       );
       return true;
     } catch (e: any) {
-      console.error("Error sending human response", e);
+      log.error("Failed to send human response", { selectedSubmitType }, e);
       return false;
     }
   };
@@ -101,6 +103,9 @@ export default function useInterruptedActions({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent> | KeyboardEvent,
   ) => {
     e.preventDefault();
+
+    log.info("Submitting human response", { submitType: selectedSubmitType });
+
     if (!humanResponse) {
       toast.error("Error", {
         description: "Please enter a response.",
@@ -178,7 +183,7 @@ export default function useInterruptedActions({
           setStreamFinished(true);
         }
       } catch (e: any) {
-        console.error("Error sending human response", e);
+        log.error("Failed to send human response", { selectedSubmitType }, e);
 
         if ("message" in e && e.message.includes("Invalid assistant ID")) {
           toast("Error: Invalid assistant ID", {
@@ -262,12 +267,13 @@ export default function useInterruptedActions({
         },
       );
 
+      log.info("Marked thread as resolved");
       toast("Success", {
         description: "Marked thread as resolved.",
         duration: 3000,
       });
     } catch (e) {
-      console.error("Error marking thread as resolved", e);
+      log.error("Failed to mark thread as resolved", {}, e);
       toast.error("Error", {
         description: "Failed to mark thread as resolved.",
         richColors: true,
